@@ -15,13 +15,13 @@ interface CachingInterface
      * @param $limited
      * @return mixed
      */
-    public static function info($type, $limited);
+    public static function info(string $type, bool $limited);
 
     /**
      * @param $key
      * @return mixed
      */
-    public static function exists($key);
+    public static function exists(string $key);
 
     /**
      * @param $key
@@ -30,23 +30,28 @@ interface CachingInterface
      * @param $overwrite
      * @return mixed
      */
-    public static function store($key, $data, $ttl, $overwrite);
+    public static function store(
+        string $key,
+        $data,
+        int $ttl,
+        bool $overwrite
+    );
 
     /**
      * @param $key
      * @return mixed
      */
-    public static function fetch($key);
+    public static function fetch(string $key);
 
     /**
      * @param $key
      * @return mixed
      */
-    public static function delete($key);
+    public static function delete(string $key);
 
     /**
      * @param $type
      * @return mixed
      */
-    public static function clear($type);
+    public static function clear(string $type);
 }

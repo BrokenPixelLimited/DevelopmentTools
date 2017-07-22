@@ -33,7 +33,7 @@ class MemcacheCacheInteraction extends CachingInteractionAbstract implements Cac
         self::$memCacheConnection->close();
     }
 
-    public static function info($type = '', $limited = false)
+    public static function info(string $type = '', bool $limited = false)
     {
         return self::$memCacheConnection->getExtendedStats();
     }
@@ -49,7 +49,7 @@ class MemcacheCacheInteraction extends CachingInteractionAbstract implements Cac
      *      array was passed to keys, then an array is returned that
      *      contains all existing keys, or an empty array if none exist.
      */
-    public static function exists($key = '')
+    public static function exists(string $key = '')
     {
         $result = false;
 
@@ -76,7 +76,7 @@ class MemcacheCacheInteraction extends CachingInteractionAbstract implements Cac
      *      Store the variable using this name.
      * @param string $data
      *      The variable to store.
-     * @param string $ttl
+     * @param int $ttl
      *      Time To Live; store var in the cache for ttl seconds.
      * @param bool $overwrite
      *      Overwrite the value if it exists.
@@ -84,8 +84,12 @@ class MemcacheCacheInteraction extends CachingInteractionAbstract implements Cac
      *      Returns true on success or false on failure.
      * @throws \Exception
      */
-    public static function store($key, $data, $ttl, $overwrite)
-    {
+    public static function store(
+        string $key,
+        $data,
+        int $ttl,
+        bool $overwrite
+    ) {
         try {
             $result = false;
 
@@ -124,7 +128,7 @@ class MemcacheCacheInteraction extends CachingInteractionAbstract implements Cac
      *      on failure.
      * @throws \Exception
      */
-    public static function fetch($key = '')
+    public static function fetch(string $key = '')
     {
         try {
             return self::$memCacheConnection->get($key);
@@ -145,7 +149,7 @@ class MemcacheCacheInteraction extends CachingInteractionAbstract implements Cac
      *      Returns true on success or false on failure.
      * @throws \Exception
      */
-    public static function delete($key)
+    public static function delete(string $key)
     {
          try {
             return self::$memCacheConnection->delete($key);
@@ -167,7 +171,7 @@ class MemcacheCacheInteraction extends CachingInteractionAbstract implements Cac
      *      Returns true on success or false on failure.
      * @throws \Exception
      */
-    public static function clear($type = '')
+    public static function clear(string $type = '')
     {
         try {
             self::$memCacheConnection->flush();

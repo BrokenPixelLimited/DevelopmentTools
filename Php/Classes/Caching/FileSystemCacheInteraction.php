@@ -16,7 +16,7 @@ class FileSystemCacheInteraction extends CachingInteractionAbstract implements C
      * @param $limited
      * @return mixed|void
      */
-    public static function info($type, $limited)
+    public static function info(string $type, bool $limited)
     {
         // TODO: Implement info() method.
     }
@@ -25,7 +25,7 @@ class FileSystemCacheInteraction extends CachingInteractionAbstract implements C
      * @param $key
      * @return mixed|void
      */
-    public static function exists($key)
+    public static function exists(string $key)
     {
         // TODO: Implement exists() method.
     }
@@ -37,8 +37,12 @@ class FileSystemCacheInteraction extends CachingInteractionAbstract implements C
      * @param $overwrite
      * @return mixed|void
      */
-    public static function store($key, $data, $ttl, $overwrite)
-    {
+    public static function store(
+        string $key,
+        $data,
+        int $ttl,
+        bool $overwrite
+    ) {
         // TODO: Implement store() method.
     }
 
@@ -46,7 +50,7 @@ class FileSystemCacheInteraction extends CachingInteractionAbstract implements C
      * @param $key
      * @return mixed|void
      */
-    public static function fetch($key)
+    public static function fetch(string $key)
     {
         // TODO: Implement fetch() method.
     }
@@ -55,7 +59,7 @@ class FileSystemCacheInteraction extends CachingInteractionAbstract implements C
      * @param $key
      * @return mixed|void
      */
-    public static function delete($key)
+    public static function delete(string $key)
     {
         // TODO: Implement delete() method.
     }
@@ -64,7 +68,7 @@ class FileSystemCacheInteraction extends CachingInteractionAbstract implements C
      * @param $type
      * @return mixed|void
      */
-    public static function clear($type)
+    public static function clear(string $type)
     {
         // TODO: Implement clear() method.
     }

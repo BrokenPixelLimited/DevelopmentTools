@@ -24,7 +24,7 @@ class ApcuCacheInteraction extends CachingInteractionAbstract implements Caching
      *      array of cached data (and meta-data) or false on failure.
      * @throws \Exception
      */
-    public static function info($type = '', $limited = false)
+    public static function info(string $type = '', bool $limited = false)
     {
         try {
             return apcu_cache_info($limited);
@@ -47,7 +47,7 @@ class ApcuCacheInteraction extends CachingInteractionAbstract implements Caching
      *      contains all existing keys, or an empty array if none exist.
      * @throws \Exception
      */
-    public static function exists($key = '')
+    public static function exists(string $key = '')
     {
         try {
             return apcu_exists($key);
@@ -75,8 +75,12 @@ class ApcuCacheInteraction extends CachingInteractionAbstract implements Caching
      *      Returns true on success or false on failure.
      * @throws \Exception
      */
-    public static function store($key, $data, $ttl = 0, $overwrite = false)
-    {
+    public static function store(
+        string $key,
+        $data,
+        int $ttl = 0,
+        bool $overwrite = false
+    ) {
         try {
             if ($overwrite) {
                 return apcu_store($key, $data, $ttl);
@@ -101,7 +105,7 @@ class ApcuCacheInteraction extends CachingInteractionAbstract implements Caching
      *      false on failure.
      * @throws \Exception
      */
-    public static function fetch($key = '')
+    public static function fetch(string $key = '')
     {
         try {
             if (self::exists($key)) {
@@ -126,7 +130,7 @@ class ApcuCacheInteraction extends CachingInteractionAbstract implements Caching
      *      Returns true on success or false on failure.
      * @throws \Exception
      */
-    public static function delete($key = '')
+    public static function delete(string $key = '')
     {
         try {
             return apcu_delete($key);
@@ -148,7 +152,7 @@ class ApcuCacheInteraction extends CachingInteractionAbstract implements Caching
      *      Returns true on success or false on failure.
      * @throws \Exception
      */
-    public static function clear($type = '') {
+    public static function clear(string $type = '') {
         try {
             return apcu_clear_cache($type);
         } catch (\Exception $exceptionResponse) {

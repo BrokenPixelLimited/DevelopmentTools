@@ -24,7 +24,7 @@ class ApcCacheInteraction extends CachingInteractionAbstract implements CachingI
      *      array of cached data (and meta-data) or false on failure.
      * @throws \Exception
      */
-    public static function info($type = '', $limited = false)
+    public static function info(string $type = '', bool $limited = false)
     {
         try {
             return apc_cache_info($type, $limited);
@@ -74,8 +74,12 @@ class ApcCacheInteraction extends CachingInteractionAbstract implements CachingI
      *      Returns true on success or false on failure.
      * @throws \Exception
      */
-    public static function store($key, $data, $ttl = 0, $overwrite = false)
-    {
+    public static function store(
+        string $key,
+        $data,
+        int $ttl = 0,
+        bool $overwrite = false
+    ) {
         try {
             if ($overwrite) {
                 return apc_store($key, $data, $ttl);
@@ -98,7 +102,7 @@ class ApcCacheInteraction extends CachingInteractionAbstract implements CachingI
      *      success; false on failure.
      * @throws \Exception
      */
-    public static function fetch($key = '')
+    public static function fetch(string $key = '')
     {
         try {
             if (self::exists($key)) {
@@ -121,7 +125,7 @@ class ApcCacheInteraction extends CachingInteractionAbstract implements CachingI
      * @return bool - Returns true on success or false on failure.
      * @throws \Exception
      */
-    public static function delete($key = '')
+    public static function delete(string $key = '')
     {
         try {
             return apc_delete($key);
@@ -141,7 +145,7 @@ class ApcCacheInteraction extends CachingInteractionAbstract implements CachingI
      * @return bool - Returns true on success or false on failure.
      * @throws \Exception
      */
-    public static function clear($type = '') {
+    public static function clear(string $type = '') {
         try {
             return apc_clear_cache($type);
         } catch (\Exception $exceptionResponse) {

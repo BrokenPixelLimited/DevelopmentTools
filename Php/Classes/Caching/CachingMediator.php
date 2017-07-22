@@ -1,6 +1,9 @@
 <?php
 namespace DevelopmentTools\Php\Classes\Caching;
 
+use DevelopmentTools\Php\Classes\ExceptionHandling\CachingException,
+    DevelopmentTools\Php\Config\Settings;
+
 /**
  * Class CachingMediator
  * @package Php\Classes\Caching
@@ -13,33 +16,80 @@ class CachingMediator
     /**
      * used to work out what caching types are available on the installed system
      * and returns a cache object in order of preference based on what is
-     * installed and enabled in the system
-     *
-     * @todo possibly change to define what cache software type you want to use
-     * @todo if multiple are setup
+     * installed and enabled in the system also handles all the dependency
+     * management for caching
      *
      * @param string $cacheType
      * @return ApcCacheInteraction|ApcuCacheInteraction|FileSystemCacheInteraction|MemcacheCacheInteraction
      * @throws \Exception
      */
-    public static function useCache($cacheType = 'volatile')
-    {
+    public static function useCache(
+        string $cacheType = 'volatile',
+        string $cachingSystem
+    ) {
+        $cachingObject = null;
+
+        $settings = new Settings();
+
+        // check which cacheType was specified
         if ($cacheType === 'volatile') {
-            if (function_exists('apcu_add')) {
-                $cachingObject = new ApcuCacheInteraction();
-            } elseif (
-                function_exists('apc_add')
-                && empty($cachingObject)
-            ) {
-                $cachingObject = new ApcCacheInteraction();
-            } elseif (
-                function_exists('memcache_add')
-                && empty($cachingObject)
-            ) {
-                $cachingObject = new MemcacheCacheInteraction();
+            switch ($cachingSystem) {
+                case 'apcu':
+                    if (function_exists('apcu_add')) {
+                        $cachingObject = new ApcuCacheInteraction(
+                            $settings
+                        );
+                    } else {
+                        throw new CachingException(
+                            'You have tried to use APCU caching '
+                            . 'but it is not configured properly for php'
+                            . 'please install and configure APCU'
+                        );
+                    }
+                    break;
+
+                case 'apc':
+                    if (function_exists('apc_add')) {
+                        $cachingObject = new ApcCacheInteraction(
+                            $settings
+                        );
+                    } else {
+                        throw new CachingException(
+                            'You have tried to use APC caching '
+                            . 'but it is not configured properly for php'
+                            . 'please install and configure APC'
+                        );
+                    }
+                    break;
+
+                case 'memcache':
+                    if (function_exists('memcache_add')) {
+                        $memCache = new \Memcache();
+                        $cachingObject = new MemcacheCacheInteraction(
+                            $settings,
+                            $memCache
+                        );
+                    } else {
+                        throw new CachingException(
+                            'You have tried to use MemCache caching '
+                            . 'but it is not configured properly for php'
+                            . 'please install and configure MemCache');
+                    }
+                    break;
+                default:
+                    self::throwCachingSystemUndefinedError();
             }
         } elseif ($cacheType === 'persistent') {
-            $cachingObject = new FileSystemCacheInteraction();
+            switch ($cachingSystem) {
+                case 'fileSystem':
+                    $cachingObject = new FileSystemCacheInteraction(
+                        $settings
+                    );
+                    break;
+                default:
+                    self::throwCachingSystemUndefinedError();
+            }
+
         } else {
             throw new \Exception(
                 'You have tried to use a caching type that is neither '
@@ -47,12 +97,14 @@ class CachingMediator
             );
         }
 
-        if (empty($cachingObject)) {
-            throw new \Exception(
-                'You don\'t have a cache to work with please '
-                .'install apcu or memcached'
-            );
-        }
         return $cachingObject;
+    }
+
+    protected static function throwCachingSystemUndefinedError()
+    {
+        throw new CachingException(
+            'You have not specified a caching system to use when calling '
+            . __CLASS__ . __METHOD__
+        );
     }
 }

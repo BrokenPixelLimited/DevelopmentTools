@@ -1,7 +1,8 @@
 <?php
 namespace DevelopmentTools\Php\Classes\Caching;
 
-use DevelopmentTools\Php\Config\Settings;
+use DevelopmentTools\Php\Classes\ExceptionHandling\SettingsException,
+    DevelopmentTools\Php\Config\Settings;
 
 
 /**
@@ -22,6 +23,14 @@ class MemcacheCacheInteraction extends CachingInteractionAbstract implements Cac
         parent::__construct($settings);
 
         self::$memCacheConnection = $memcache;
+
+        self::$settings->checkSettingsAreSet(
+            array(
+                'memcacheServerAddress',
+                'memcacheServerPort',
+                'memcacheUseCompression'
+            )
+        );
 
         self::$memCacheConnection->addServer(
             self::$settings->memcacheServerAddress,

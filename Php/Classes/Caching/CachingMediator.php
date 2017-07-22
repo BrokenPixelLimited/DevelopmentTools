@@ -20,6 +20,9 @@ class CachingMediator
      * management for caching
      *
      * @param string $cacheType
+     *      used to specify volatile or persistent
+     * @param string $cachingSystem
+     *      used for which caching system you want to us
      * @return ApcCacheInteraction|ApcuCacheInteraction|FileSystemCacheInteraction|MemcacheCacheInteraction
      * @throws \Exception
      */

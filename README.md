@@ -2,7 +2,7 @@
 ## Core Development Framework and Components
 
 * _@author John James contact@brokenpixel.uk_
-* _@website [https://brokenpixel.uk]_
+* _@website https://brokenpixel.uk_
 * _@license GPLv3_
 
 ***
@@ -23,4 +23,4 @@ its development with a publicly accessible acknowledgement.
 
 If on the other hand you would like to us to work with you in building bespoke 
 components or code bases please get in touch on our website. 
-[https://brokenpixel.uk] 
+https://brokenpixel.uk

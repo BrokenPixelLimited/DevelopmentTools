@@ -1,10 +1,12 @@
 <?php
-namespace CodeLibrary\Php\Classes\Caching;
+namespace DevelopmentTools\Php\Classes\Caching;
 
 /**
  * Interface CachingInterface
- * @package CodeLibrary\Php\Classes\Caching
+ * @package DevelopmentTools\Php\Classes\Caching
  * @author John James contact@brokenpixel.uk
+ * @copyright Broken Pixel Limited
+ * @license GPLv3
  */
 interface CachingInterface
 {

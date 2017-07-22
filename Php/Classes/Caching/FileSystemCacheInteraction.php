@@ -1,17 +1,20 @@
 <?php
-namespace CodeLibrary\Php\Classes\Caching;
+namespace DevelopmentTools\Php\Classes\Caching;
 
 
 /**
  * Class FileSystemCacheInteraction
- * @package CodeLibrary\Php\Classes\Caching
+ * @package DevelopmentTools\Php\Classes\Caching
  * @author John James contact@brokenpixel.uk
+ * @copyright Broken Pixel Limited
+ * @license GPLv3
  */
-class FileSystemCacheInteraction implements CachingInterface
+class FileSystemCacheInteraction extends CachingInteractionAbstract implements CachingInterface
 {
     /**
      * @param $type
      * @param $limited
+     * @return mixed|void
      */
     public static function info($type, $limited)
     {
@@ -20,6 +23,7 @@ class FileSystemCacheInteraction implements CachingInterface
 
     /**
      * @param $key
+     * @return mixed|void
      */
     public static function exists($key)
     {
@@ -31,6 +35,7 @@ class FileSystemCacheInteraction implements CachingInterface
      * @param $data
      * @param $ttl
      * @param $overwrite
+     * @return mixed|void
      */
     public static function store($key, $data, $ttl, $overwrite)
     {
@@ -39,6 +44,7 @@ class FileSystemCacheInteraction implements CachingInterface
 
     /**
      * @param $key
+     * @return mixed|void
      */
     public static function fetch($key)
     {
@@ -47,6 +53,7 @@ class FileSystemCacheInteraction implements CachingInterface
 
     /**
      * @param $key
+     * @return mixed|void
      */
     public static function delete($key)
     {
@@ -55,6 +62,7 @@ class FileSystemCacheInteraction implements CachingInterface
 
     /**
      * @param $type
+     * @return mixed|void
      */
     public static function clear($type)
     {

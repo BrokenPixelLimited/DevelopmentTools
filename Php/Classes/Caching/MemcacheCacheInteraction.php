@@ -182,5 +182,4 @@ class MemcacheCacheInteraction extends CachingInteractionAbstract implements Cac
              );
         }
     }
-
 }

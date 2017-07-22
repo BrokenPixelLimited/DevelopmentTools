@@ -1,8 +1,7 @@
 <?php
 namespace DevelopmentTools\Php\Classes\Caching;
 
-use DevelopmentTools\Php\Classes\ExceptionHandling\SettingsException,
-    DevelopmentTools\Php\Config\Settings;
+use DevelopmentTools\Php\Config\Settings;
 
 
 /**
